@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Preview</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      background: #f3f4f6;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .widget-container {
+      width: 100%;
+      max-width: 300px;
+    }
+    .instructions {
+      margin-top: 24px;
+      padding: 16px;
+      background: white;
+      border-radius: 8px;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .instructions h2 {
+      margin: 0 0 12px 0;
+      font-size: 18px;
+    }
+    .instructions ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .instructions li {
+      margin-bottom: 8px;
+    }
+    .instructions li:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="widget-container">
+    <iframe src="widget.html" frameborder="0" width="100%" height="160" style="border-radius: 16px;"></iframe>
+    
+    <div class="instructions">
+      <h2>How to Add the Widget</h2>
+      <ol>
+        <li>Long press on your home screen</li>
+        <li>Select "Widgets"</li>
+        <li>Find "Chrome" or your browser</li>
+        <li>Choose "Website"</li>
+        <li>Select the size (2x2 recommended)</li>
+        <li>Enter this URL: <code>https://your-app.com/widget.html</code></li>
+      </ol>
+    </div>
+  </div>
+</body>
+</html>

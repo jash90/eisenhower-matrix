@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eisenhower Matrix Widget</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 8px;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: transparent;
+    }
+    .widget {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .quadrant {
+      padding: 8px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .count {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .label {
+      font-size: 12px;
+      text-align: center;
+      opacity: 0.8;
+    }
+    .q1 { background: rgba(239, 68, 68, 0.1); color: rgb(185, 28, 28); }
+    .q2 { background: rgba(59, 130, 246, 0.1); color: rgb(29, 78, 216); }
+    .q3 { background: rgba(245, 158, 11, 0.1); color: rgb(180, 83, 9); }
+    .q4 { background: rgba(107, 114, 128, 0.1); color: rgb(55, 65, 81); }
+  </style>
+</head>
+<body>
+  <div class="widget">
+    <div class="quadrant q1">
+      <div class="count" id="q1-count">0</div>
+      <div class="label">Do First</div>
+    </div>
+    <div class="quadrant q2">
+      <div class="count" id="q2-count">0</div>
+      <div class="label">Schedule</div>
+    </div>
+    <div class="quadrant q3">
+      <div class="count" id="q3-count">0</div>
+      <div class="label">Delegate</div>
+    </div>
+    <div class="quadrant q4">
+      <div class="count" id="q4-count">0</div>
+      <div class="label">Don't Do</div>
+    </div>
+  </div>
+  <script>
+    // Function to update widget counts
+    async function updateCounts() {
+      try {
+        const response = await fetch('https://tuqtxrtfrxufpdicsher.supabase.co/rest/v1/tasks?select=quadrant,completed', {
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1cXR4cnRmcnh1ZnBkaWNzaGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1MDczODcsImV4cCI6MjA1NjA4MzM4N30.XXbvyj6RyHfU3qGw95BvP3MZTfqaxzkRoyjz7HY56cQ'
+          }
+        });
+        
+        const tasks = await response.json();
+        const counts = {1: 0, 2: 0, 3: 0, 4: 0};
+        
+        tasks.forEach(task => {
+          if (!task.completed) {
+            counts[task.quadrant]++;
+          }
+        });
+        
+        // Update the UI
+        Object.keys(counts).forEach(quadrant => {
+          document.getElementById(`q${quadrant}-count`).textContent = counts[quadrant];
+        });
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    }
+
+    // Update initially and every minute
+    updateCounts();
+    setInterval(updateCounts, 60000);
+  </script>
+</body>
+</html>
